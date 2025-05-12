@@ -19,8 +19,19 @@
         gap: 20px;
         width: 100%;
 
+        .address {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            background-color: whitesmoke;
+            width: fit-content;
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+
         .address img {
-            width: 14px;
+            max-width: 16px;
+            max-height: 16px;
         }
 
         .price {

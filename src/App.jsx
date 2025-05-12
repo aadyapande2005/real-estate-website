@@ -6,6 +6,8 @@ import {
 import HomePage from "./routes/homePage/homePage";
 import Layout from "./routes/layout/layout";
 import ListPage from "./routes/listPage/ListPage";
+import SinglePage from "./routes/singlePage/singlePage";
+
 
 function App() {
   const router = createBrowserRouter([
@@ -23,7 +25,7 @@ function App() {
         },
         {
           path:"/:id",
-          element:<ListPage />
+          element:<SinglePage />
         }
 
       ]

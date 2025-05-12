@@ -12,7 +12,7 @@ function Card({item}) {
         </div>
         <div className="textcontainer">
             <h3>Apartment {item.id}</h3>
-            <p className='address'><img src="pin.png" />{item.address}</p>
+            <div className='address'><img src="pin.png" />{item.address}</div>
             <p className='price'>₹{item.price}</p>
             <div className="features">
                 <div className="feature">

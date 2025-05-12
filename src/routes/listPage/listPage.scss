@@ -20,6 +20,10 @@
             height: 500px;
             overflow-y: scroll;
             padding-bottom: 70px;
+
+            div {
+                cursor:pointer;
+            }
         }
 
     }   
