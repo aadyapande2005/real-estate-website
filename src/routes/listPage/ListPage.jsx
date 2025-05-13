@@ -31,8 +31,7 @@ function ListPage() {
                 <Card item={item} />
               </div>)
           )}
-          </div>
-          
+          </div>        
 
         </div>
       </div>

@@ -1,10 +1,16 @@
+@import '../../responsive.scss';
+
 .card {
     padding: 10px;
     display: flex;
     gap: 15px;
     border: 1px solid rgb(197, 187, 187);
 
-    .imagecontainer {        
+    .imagecontainer { 
+        
+        @include sm {
+            display: none;
+        }
 
         img {
             width: 200px;
