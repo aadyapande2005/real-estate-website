@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken'
 
 export const verifyjwt = async (req, res, next) => {
     try {
-        console.log(req.cookies)
         const token = req.cookies.token
     
         if(!token) {
@@ -11,8 +10,8 @@ export const verifyjwt = async (req, res, next) => {
     
         jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, payload) => {
             if(err) return res.status(401).json("message : Invalid Token")
-            console.log(payload)    
-            req.user = payload
+            const {id, username} = payload
+            req.user = {id, username}
     
             next()
         })  

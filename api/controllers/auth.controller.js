@@ -19,7 +19,7 @@ export const register = async (req, res) => {
     
         if(!newUser) {
             console.log(newUser)
-            res.status(401).json("Error while creating user")
+            return res.status(401).json("Error while creating user")
         }
         
         console.log(newUser)
@@ -71,7 +71,7 @@ export const login = async (req, res) => {
             },
             process.env.JWT_SECRET_KEY,
             {
-                expiresIn: age
+                expiresIn: '7d'
             }
         )
     
