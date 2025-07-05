@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import cookieParser from 'cookie-parser'
 import prisma from '../lib/prisma.js'
 
 export const register = async (req, res) => {
@@ -48,7 +47,7 @@ export const login = async (req, res) => {
     
         if(!finduser) {
             console.log(finduser)
-            res.status(401).json("message : Invalid Login credentials")
+            res.status(401).json("Invalid Login credentials")
             return
         }
     
@@ -57,7 +56,7 @@ export const login = async (req, res) => {
         const isPasswordCorrect = await bcrypt.compare(password, finduser.password)
     
         if(!isPasswordCorrect) {
-            res.status(401).json("message : Invalid Login credentials")
+            res.status(401).json("Invalid Login credentials")
             return
         }
 
@@ -74,6 +73,8 @@ export const login = async (req, res) => {
                 expiresIn: '7d'
             }
         )
+
+        const {password:userpassword, ...user} = finduser
     
         res
         .status(200)
@@ -81,16 +82,16 @@ export const login = async (req, res) => {
             httpOnly : true,
             //secure : true
         })
-        .json("message : User Logged in successfully")
+        .json(user)
 
     } catch (error) {
         console.error(error)
-        res.status(500).json("message : Error while logging in")
+        res.status(500).json("Error while logging in")
     }
 }
 
 export const logout = async (req, res) => {
     // const username = req.user.username
-    res.clearCookie("token").status(200).json(`message : you have been logged out successfully`)
+    res.clearCookie("token").status(200).json(`you have been logged out successfully`)
 }
 

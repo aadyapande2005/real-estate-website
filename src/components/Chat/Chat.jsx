@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./chat.scss";
+import { AuthContext } from "../../context/authcontext";
 
 function Chat() {
   const [chat, setChat] = useState(true);
+  const {currentUser} = useContext(AuthContext)
   return (
     <div className="chat">
         <h1>Messages</h1>
@@ -61,7 +63,7 @@ function Chat() {
           <div className="top">
             <div className="user">
               <img
-                src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                src={currentUser.avatar || "default-profile.avif"}
                 alt=""
               />
               John Doe

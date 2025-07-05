@@ -3,10 +3,13 @@ import { verifyjwt } from "../middleware/verifyjwt.js";
 
 const router = Router()
 
-import { updateUser, getUser } from "../controllers/user.controller.js";
+import { updateUser, getUser, getUsers, deleteUser } from "../controllers/user.controller.js";
 
-router.get('/update', updateUser)
-router.get('/get', verifyjwt, getUser)
+router.get('/', getUsers)
+router.get('/:id', getUser)
+router.put('/:id', verifyjwt, updateUser)
+router.delete('/:id', verifyjwt, deleteUser)
+
 
 
 export default router

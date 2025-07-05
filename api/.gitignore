@@ -9,7 +9,7 @@ package-lock.json
 .env
 .prisma
 prisma/migrations
-generated/prisma/ # or wherever you configure the client to be generated
+api/generated/prisma/ # or wherever you configure the client to be generated
 
 # Logs
 *.log

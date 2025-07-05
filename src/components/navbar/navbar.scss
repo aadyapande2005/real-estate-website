@@ -58,6 +58,23 @@ nav {
       background-color: transparent;
     }
 
+    .signing {
+      display: flex;
+      gap: 10px;
+      margin-left: 20px;
+
+      button {
+        width: 100px;
+        height: 40px;
+        border: none;
+        background-color: rgb(251, 199, 28);
+        color: rgb(255, 255, 255);
+        border-radius: 5px;
+        font-size: 15px;
+        cursor: pointer;
+      }
+    }
+
     a {
       padding: 12px 24px;
       margin: 20px;
