@@ -1,19 +1,30 @@
 import prisma from "../lib/prisma.js";
 
 export const getPosts = async (req, res) => {
-   try {
+	const query = req.query;
+	try {
+		const posts = await prisma.post.findMany({
+			where: {
+				city: query.city || undefined,
+				type: query.type || undefined,
+				property: query.property || undefined,
+				bedroom: parseInt(query.bedroom) || undefined,
+				price: {
+					gte: parseInt(query.minPrice) || undefined,
+					lte: parseInt(query.maxPrice) || undefined,
+				},
+			},
+		})
+		res.status(200).json(posts);
 
-     const posts = await prisma.post.findMany()
-     res.status(200).json(posts);
-
-   } catch (error) {
-     console.error("Error fetching posts:", error);
-     res.status(500).json({ message: "Internal Server Error" });    
-   }
+	} catch (error) {
+		console.error("Error fetching posts:", error);
+		res.status(500).json({ message: "Internal Server Error" });
+	}
 }
 
 export const getPost = async (req, res) => {
-  const { id } = req.params;
+	const { id } = req.params;
 	try {
 		const post = await prisma.post.findUnique({
 			where: { id },
@@ -33,7 +44,7 @@ export const getPost = async (req, res) => {
 		console.error("Error fetching post:", error);
 		return res.status(500).json({ message: "Internal Server Error" });
 	}
-  
+
 }
 
 export const createPost = async (req, res) => {
@@ -45,7 +56,7 @@ export const createPost = async (req, res) => {
 			data: {
 				...postData,
 				userId: tokenid,
-				postdetail : {
+				postdetail: {
 					create: postdetail,
 				}
 			},
@@ -58,12 +69,12 @@ export const createPost = async (req, res) => {
 }
 
 export const updatePost = (req, res) => {
-  const { id } = req.params;
-  res.status(200).json({ message: `Post with id ${id} updated successfully` });
+	const { id } = req.params;
+	res.status(200).json({ message: `Post with id ${id} updated successfully` });
 }
 
 export const deletePost = async (req, res) => {
-  const { id } = req.params;
+	const { id } = req.params;
 	const tokenid = req.user.id
 	try {
 		const post = await prisma.post.findUnique({
@@ -86,7 +97,7 @@ export const deletePost = async (req, res) => {
 	} catch (error) {
 		console.error("Error deleting post:", error);
 		return res.status(500).json({ message: "Internal Server Error" });
-		
+
 	}
-  
+
 }

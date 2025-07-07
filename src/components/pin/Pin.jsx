@@ -14,7 +14,9 @@ function Pin({ item }) {
 
   const handleMouseOut = () => {
     if (markerRef.current) {
-      markerRef.current.closePopup();
+      setTimeout(() => {
+        markerRef.current.closePopup();
+      }, 1500);
     }
   };
 
@@ -25,7 +27,7 @@ function Pin({ item }) {
       }} ref={markerRef}>
       <Popup>
         <div className="popupContainer">
-          <img src={item.img} alt="" />
+          <img src={item.images[0]} alt="" />
           <div className="textContainer">
             <Link to={`/${item.id}`}>{item.title}</Link>
             <span>{item.bedroom} bedroom</span>

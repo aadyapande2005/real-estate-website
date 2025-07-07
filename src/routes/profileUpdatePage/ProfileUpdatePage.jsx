@@ -96,7 +96,7 @@ function ProfileUpdatePage() {
       <div className="right">
         <img src={avatar || "/default-profile.avif"} />
 
-        <UploadWidget uwConfig={uwConfig} setState={setAvatar} multiple={false} />
+        <UploadWidget uwConfig={uwConfig} setState={setAvatar} />
 
       </div>
     </div>

@@ -2,7 +2,7 @@ import Chat from "../../components/Chat/Chat";
 import List from "../../components/List/List";
 import "./profilePage.scss";
 import apiRequest from "../../lib/apiRequest";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authcontext";
 
@@ -14,8 +14,9 @@ function ProfilePage() {
     const response = await apiRequest.post("/auth/logout")
     localStorage.removeItem("user")
     updateUser(null)
-    navigate("/")
+    navigate("/")    
   }
+    const posts = useLoaderData()
   return (
     <div className="profilePage">
       <div className="details">
@@ -44,13 +45,13 @@ function ProfilePage() {
 
           <div className="title">
             <h1>My List</h1>
-            <button>Create New Post</button>
+            <Link to="/profile/newpost"><button>Create New Post</button></Link>
           </div>
-          <List />
+          <List posts={posts} />
           <div className="title">
             <h1>Saved List</h1>
           </div>
-          <List />
+          <List posts={posts} />
         </div>
       </div>
       <div className="chatContainer">

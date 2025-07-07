@@ -6,7 +6,7 @@ import { listData } from '../../lib/dummydata';
 import Pin from '../pin/Pin';
 import MapUpdater from '../mapUpdater/MapUpdater';
 
-function Map({coords}) {
+function Map({coords, posts}) {
 	return (
 		<MapContainer className='map' center={coords} zoom={12} scrollWheelZoom={true}>
 			<TileLayer
@@ -14,7 +14,7 @@ function Map({coords}) {
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
 			{
-				listData.map(pos =>
+				posts.map(pos =>
 					<Pin item={pos} key={pos.id} />)
 			}
 			<MapUpdater coords={coords} />

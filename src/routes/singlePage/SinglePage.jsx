@@ -1,19 +1,20 @@
-import React from 'react'
 import './singlePage.scss'
-import { useParams } from 'react-router-dom'
-import { listData, singlePostData } from '../../lib/dummydata'
+import { useLoaderData } from 'react-router-dom'
 import SingleMap from '../../components/singleMap/SingleMap'
 import Slider from '../../components/Slider/Slider'
+import DOMPurify from 'dompurify'
 
-function SinglePage(props) {
-  const { id } = useParams();
-  const founddata = listData.find(item => item.id === Number(id))
+function SinglePage() {
+  const post = useLoaderData()
+  console.log(post)
+
+  const { postdetail, user, ...body } = post
 
   return (
     <div className="singlePage">
       <div className="wrapper">
         <div className="details">
-          <Slider images={singlePostData.images} />
+          <Slider images={body.images} />
           {/* <div className="images">
             <div className="front-image">
               <img src={founddata.img} alt="" />
@@ -27,21 +28,19 @@ function SinglePage(props) {
           <div className="description">
             <div className="title">
               <div className="apartment-description">
-                <h2>{founddata.title}</h2>
-                <span><img src="pin.png" />{founddata.address}</span>
-                <div className="price">₹ {founddata.price}</div>
+                <h2>{body.title}</h2>
+                <span><img src="pin.png" />{body.address}</span>
+                <div className="price">₹ {body.price}</div>
               </div>
               <div className="owner-info">
                 <img
-                  src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  src={user.avatar || "default-profile.avif"}
                   alt=""
                 />
-                <span>John Doe</span>
+                <span>{user.username}</span>
               </div>
             </div>
-            <div className="content">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla iure laboriosam quas facere id suscipit quam natus obcaecati cupiditate autem dolore, libero error reiciendis repudiandae quos, quia molestias! Repellendus, quibusdam?
-
+            <div className="content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(postdetail.desc) }}>
             </div>
           </div>
         </div>
@@ -55,21 +54,21 @@ function SinglePage(props) {
                 <img src="utility.png" />
                 <div className="description">
                   <h5>Utilities</h5>
-                  <p>Renter is responsible</p>
+                  <p>{postdetail.utilities}</p>
                 </div>
               </div>
               <div className="utility">
                 <img src="pet.png" />
                 <div className="description">
                   <h5>Pet Policy</h5>
-                  <p>Pets allowed</p>
+                  <p>{postdetail.pet}</p>
                 </div>
               </div>
               <div className="utility">
                 <img src="fee.png" />
                 <div className="description">
                   <h5>Property fees</h5>
-                  <p>Must have 3x the rent in total household income</p>
+                  <p>{postdetail.income}</p>
                 </div>
               </div>
             </div>
@@ -79,15 +78,15 @@ function SinglePage(props) {
             <div className="specifications">
               <div className="specs">
                 <img src="size.png" />
-                <span>861 sqft</span>
+                <span>{postdetail.size} sqft</span>
               </div>
               <div className="specs">
                 <img src="bed.png" />
-                <span>2 bed</span>
+                <span>{body.bedroom} bed</span>
               </div>
               <div className="specs">
                 <img src="bath.png" />
-                <span>1 bathroom</span>
+                <span>{body.bathroom} bathroom</span>
               </div>
             </div>
           </div>
@@ -98,27 +97,27 @@ function SinglePage(props) {
                 <img src="school.png" />
                 <div className="desc">
                   <h5>School</h5>
-                  <p>250m away</p>
+                  <p>{postdetail.school}m away</p>
                 </div>
               </div>
               <div className="place">
                 <img src="bus.png" />
                 <div className="desc">
                   <h5>Bus Stop</h5>
-                  <p>100m away</p>
+                  <p>{postdetail.bus}m away</p>
                 </div>
               </div>
               <div className="place">
                 <img src="restaurant.png" />
                 <div className="desc">
                   <h5>Restaurant</h5>
-                  <p>200m away</p>
+                  <p>{postdetail.restaurant}m away</p>
                 </div>
               </div>
             </div>
           </div>
           <div className="location">
-            <SingleMap item={founddata}/>
+            <SingleMap item={body}/>
           </div>
           <div className="actions">
             <button className="send"><img src="chat.png" />Send a message</button>

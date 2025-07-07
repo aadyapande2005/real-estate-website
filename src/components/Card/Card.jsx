@@ -3,15 +3,16 @@ import { Link } from 'react-router-dom'
 import './Card.scss'
 
 function Card({item}) {
+    console.log(item)
   return (
     <div className="card">
         <div className="imagecontainer">
             <Link to={`/${item.id}`}>
-                <img src={item.img} alt="" />
+                <img src={item.images[0]} alt="" />
             </Link>
         </div>
         <div className="textcontainer">
-            <h3>Apartment {item.id}</h3>
+            <h3>{item.title}</h3>
             <div className='address' ><img src="pin.png" />{item.address}</div>
             <p className='price'>₹{item.price}</p>
             <div className="features">
