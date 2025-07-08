@@ -10,45 +10,74 @@ export const getChats = async (req, res) => {
                 }
             }
         });
-        res
-        .status(200)
-        .json(chats)
+        res.status(200).json(chats)
     } catch (error) {
         console.log(error)
-        res
-        .status(500)
-        .json("Failed to update User")
+        res.status(500).json("Failed to get your chats")
     }
 }
 
 export const getChat = async (req, res) => {
-    const id = req.params.id
+    const chatId = req.params.id
     const tokenid = req.user.id
     try {
-        
-        res
-        .status(200)
-        .json("User deleted successfully")
+        const chat = await prisma.chat.findUnique({
+            where : {
+                id : chatId,
+                userIDs : {
+                    hasSome: [tokenid]
+                }                
+            },
+            include : {
+                messages: true,
+                users: true,
+            }
+        })
+        if(!chat) res.status(403).json("You are not allowed to access this chat")
+
+        res.status(200).json(chat)
     } catch (error) {
         console.log(error)
-        res
-        .status(500)
-        .json("Failed to delete User")
+        res.status(500).json("Failed to get chat")
     }
 }
 
-export const sendMessage = async (req, res) => {
-    const id = req.params.id
+export const createChat = async (req,res) => {
+    const recieverId = req.params.id
+    const tokenid = req.user.id
     try {
-        
-        res
-        .status(200)
-        .json(users)
+        const chat = await prisma.chat.create({
+            data: {
+                userIDs: [tokenid, recieverId]
+            }
+        });
+
+        await prisma.user.update({
+            where : {
+                id: tokenid
+            },
+            data: {
+                chatIDs : {
+                    push: chat.id
+                }
+            }
+        })
+
+        await prisma.user.update({
+            where : {
+                id: recieverId
+            },
+            data: {
+                chatIDs : {
+                    push: chat.id
+                }
+            }
+        })
+
+        res.status(200).json(chat)
     } catch (error) {
         console.log(error)
-        res
-        .status(500)
-        .json("Failed to get User")
+        res.status(500).json("Failed to create chat")
     }
 }
 
@@ -56,14 +85,10 @@ export const markAsRead = async (req, res) => {
     try {
 
 
-        res
-        .status(200)
-        .json(users)
+        res.status(200).json(users)
     } catch (error) {
         console.log(error)
-        res
-        .status(500)
-        .json("Failed to get Users")
+        res.status(500).json("Failed to get Users")
     }
 }
 

@@ -63,7 +63,7 @@ function Chat() {
           <div className="top">
             <div className="user">
               <img
-                src={currentUser.avatar || "default-profile.avif"}
+                src={"default-profile.avif"}
                 alt=""
               />
               John Doe
