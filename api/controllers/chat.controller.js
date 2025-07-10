@@ -8,6 +8,15 @@ export const getChats = async (req, res) => {
                 userIDs: {
                     hasSome: [tokenid]
                 }
+            },
+            include : {
+                users: {
+                    select:{
+                        id: true,
+                        username: true,
+                        avatar: true
+                    }
+                }
             }
         });
         res.status(200).json(chats)

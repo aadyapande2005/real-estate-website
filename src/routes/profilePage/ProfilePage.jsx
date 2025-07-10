@@ -16,7 +16,9 @@ function ProfilePage() {
     updateUser(null)
     navigate("/")    
   }
-    const posts = useLoaderData()
+
+  const {posts, chats} = useLoaderData() 
+
   return (
     <div className="profilePage">
       <div className="details">
@@ -56,7 +58,7 @@ function ProfilePage() {
       </div>
       <div className="chatContainer">
         <div className="wrapper">
-          <Chat/>
+          <Chat chats={chats} />
         </div>
       </div>
     </div>

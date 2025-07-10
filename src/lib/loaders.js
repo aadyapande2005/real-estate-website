@@ -15,5 +15,9 @@ export const profilePageLoader = async () => {
   //const posts = apiRequest("/users/profilePosts");
   //const chatPromise = apiRequest("/chats");  
   const posts = await apiRequest("/posts")
-  return posts.data
+  const chats = await apiRequest("/chats");
+  return {
+    posts : posts.data,
+    chats: chats.data
+  }
 };

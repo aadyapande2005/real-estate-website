@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import './Card.scss'
 
 function Card({item}) {
-    console.log(item)
   return (
     <div className="card">
         <div className="imagecontainer">
