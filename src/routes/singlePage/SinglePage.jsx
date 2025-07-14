@@ -3,12 +3,36 @@ import { useLoaderData } from 'react-router-dom'
 import SingleMap from '../../components/singleMap/SingleMap'
 import Slider from '../../components/Slider/Slider'
 import DOMPurify from 'dompurify'
+import apiRequest from '../../lib/apiRequest'
+import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 function SinglePage() {
   const post = useLoaderData()
+
   console.log(post)
 
+  const [save, setSave] = useState(post.isSaved)
+
+  const handleCreateChat = () => {
+    console.log("Chat created!")
+  }
+
+  const handleSavePost = async () => {
+    const postId = post.id
+    console.log(postId)
+    try {
+      const savedpost = await apiRequest.post("/posts/savepost/" + postId)
+      setSave((prev) => !prev)
+      console.log(savedpost.data);
+      toast.success(savedpost.data.message)
+    } catch (error) {
+      console.error("Error saving post:", error);      
+    }
+  }
+
   const { postdetail, user, ...body } = post
+
 
   return (
     <div className="singlePage">
@@ -120,8 +144,12 @@ function SinglePage() {
             <SingleMap item={body}/>
           </div>
           <div className="actions">
-            <button className="send"><img src="chat.png" />Send a message</button>
-            <button className="save"><img src="save.png" />Save the place </button>
+            <button className="send" onClick={handleCreateChat} ><img src="chat.png" />Send a message</button>
+            
+            {save ? 
+              <button className="save" onClick={handleSavePost} ><img src="save.png" />Place Saved</button> 
+            : <button className="save" onClick={handleSavePost} style={{backgroundColor:"rgb(249, 230, 108)"}} ><img src="save.png" />Save the place</button>}
+            
           </div>
 
         </div>

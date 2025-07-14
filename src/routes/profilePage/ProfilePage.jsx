@@ -17,7 +17,9 @@ function ProfilePage() {
     navigate("/")    
   }
 
-  const {posts, chats} = useLoaderData() 
+  const {posts, chats, savedposts} = useLoaderData() 
+
+  console.log(savedposts)
 
   return (
     <div className="profilePage">
@@ -49,11 +51,11 @@ function ProfilePage() {
             <h1>My List</h1>
             <Link to="/profile/newpost"><button>Create New Post</button></Link>
           </div>
-          <List posts={posts} />
+          <List posts={posts} isSavedPost={false} />
           <div className="title">
             <h1>Saved List</h1>
           </div>
-          <List posts={posts} />
+          <List posts={savedposts} isSavedPost={true} />
         </div>
       </div>
       <div className="chatContainer">

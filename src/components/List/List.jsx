@@ -1,13 +1,12 @@
 import './list.scss'
 import Card from '../Card/Card'
-import {listData} from"../../lib/dummydata"
 
-function List({posts}){
+function List({posts, isSavedPost}){
 
   return (
     <div className='list'>
       {posts.map(item=>(
-        <Card key={item.id} item={item}/>
+        <Card key={item.id} item={isSavedPost ? item.post : item }/>
       ))}
     </div>
   )

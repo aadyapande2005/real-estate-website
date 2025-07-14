@@ -3,6 +3,9 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import HomePage from "./routes/homePage/homePage";
 import {Layout, RequireAuth} from "./routes/layout/layout";
 import ListPage from "./routes/listPage/ListPage";
@@ -16,6 +19,7 @@ import { listPageLoader, profilePageLoader, singlePageLoader } from "./lib/loade
 
 
 function App() {
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -68,8 +72,10 @@ function App() {
   ]);
 
   return (
-
-    <RouterProvider router={router}/>
+    <div>
+      <ToastContainer />
+      <RouterProvider router={router}/>
+    </div>
   );
 }
 

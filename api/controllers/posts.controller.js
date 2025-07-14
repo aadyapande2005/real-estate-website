@@ -1,4 +1,5 @@
 import prisma from "../lib/prisma.js";
+import jwt from 'jsonwebtoken'
 
 export const getPosts = async (req, res) => {
 	const query = req.query;
@@ -24,10 +25,10 @@ export const getPosts = async (req, res) => {
 }
 
 export const getPost = async (req, res) => {
-	const { id } = req.params;
+	const postId = req.params.id;
 	try {
 		const post = await prisma.post.findUnique({
-			where: { id },
+			where: { id: postId },
 			include: {
 				postdetail: true,
 				user: {
@@ -39,12 +40,48 @@ export const getPost = async (req, res) => {
 				},
 			},
 		});
-		res.status(200).json(post);
+
+		const token = req.cookies.token
+    
+        if(!token) {
+            return res.status(401).json("token not found")
+        }
+
+		let id
+
+		jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, payload) => {
+			if(err) return res.status(401).json({message : "Invalid Token"})
+			id = payload.id		
+		})
+
+		const isSaved = await prisma.savedPost.findUnique({
+				where: {
+					userId_postId: {
+						userId: id,
+						postId,
+					},
+				},
+			})
+
+		res.status(200).json({...post, isSaved: !!isSaved });
 	} catch (error) {
 		console.error("Error fetching post:", error);
 		return res.status(500).json({ message: "Internal Server Error" });
 	}
 
+}
+
+export const getMyPosts = async (req,res) => {
+	const tokenid = req.user.id
+	try {
+		const posts = await prisma.post.findMany({
+			where: { userId: tokenid }			
+		});
+		res.status(200).json(posts);
+	} catch (error) {
+		console.error("Error fetching user's posts:", error);
+		return res.status(500).json({ message: "Internal Server Error" });
+	}
 }
 
 export const createPost = async (req, res) => {
@@ -100,4 +137,74 @@ export const deletePost = async (req, res) => {
 
 	}
 
+}
+
+export const toggleSavePost = async (req, res) => {
+  const postId = req.params.id;
+  const tokenid = req.user?.id;
+
+  if(!tokenid) {
+	return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  try {
+    const post = await prisma.post.findUnique({
+      where: { id: postId },
+    });
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    const existingSavedPost = await prisma.savedPost.findUnique({
+      where: {
+        userId_postId: {
+          userId: tokenid,
+          postId: postId,
+        },
+      },
+    });
+
+    if (existingSavedPost) {
+      await prisma.savedPost.delete({
+        where: {
+          userId_postId: {
+            userId: tokenid,
+            postId: postId,
+          },
+        },
+      });
+
+      return res.status(200).json({ message: "Post unsaved successfully" });
+    } else {
+      const newSavedPost = await prisma.savedPost.create({
+        data: {
+          userId: tokenid,
+          postId: postId,
+        },
+      });
+
+      return res.status(200).json({ message: "Post saved successfully", data: newSavedPost });
+    }
+  } catch (error) {
+    console.error("Error toggling saved post:", error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+
+export const getMySavedPosts = async (req, res) => {
+	const tokenid = req.user.id;
+	try {
+		const savedPosts = await prisma.savedPost.findMany({
+			where: { userId: tokenid },
+			include: {
+				post: true,			
+			},
+		});
+		res.status(200).json(savedPosts);
+	} catch (error) {
+		console.error("Error fetching saved posts:", error);
+		return res.status(500).json({ message: "Internal Server Error" });
+	}
 }
