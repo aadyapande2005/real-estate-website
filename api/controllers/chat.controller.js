@@ -92,7 +92,7 @@ export const createChat = async (req,res) => {
 
 export const markAsRead = async (req, res) => {
     try {
-
+        
 
         res.status(200).json(users)
     } catch (error) {

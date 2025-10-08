@@ -1,4 +1,5 @@
 import prisma from "../lib/prisma.js";
+import { io } from "../index.js";
 
 export const sendMessage = async (req, res) => {
     const chatId = req.params.id
@@ -31,6 +32,8 @@ export const sendMessage = async (req, res) => {
                 lastMessage: text,
             }
         })
+        // Emit the new message to all clients in the chat room
+        io.to(chatId).emit("newMessage", message);
         res
         .status(200)
         .json(message)

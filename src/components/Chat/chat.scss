@@ -70,43 +70,43 @@
       }
     }
     .center {
-  height: 350px;
-  overflow: scroll;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+      height: 350px;
+      // overflow: scroll;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
 
-  .chatMessage {
-      width: fit-content;
-      max-width: 70%;
-      padding: 10px;
-      border-radius: 10px 10px 10px 0px;
-      background-color: #fef3b7;
-      text-align: left;
-      align-self: flex-start;
+      .chatMessage {
+          width: fit-content;
+          max-width: 70%;
+          padding: 10px;
+          border-radius: 10px 10px 10px 0px;
+          background-color: #fef3b7;
+          text-align: left;
+          align-self: flex-start;
 
-      &.own {
-        align-self: flex-end;
-        background-color: rgb(236, 230, 230);
-        border-radius: 10px 10px 0px 10px;
-        text-align: right;
-      }
+          &.own {
+            align-self: flex-end;
+            background-color: rgb(236, 230, 230);
+            border-radius: 10px 10px 0px 10px;
+            text-align: right;
+          }
 
-      p {
-        margin: 0;
-      }
+          p {
+            margin: 0;
+          }
 
-      span {
-        font-size: 12px;
-        background-color: #ffae0065;
-        padding: 2px 6px;
-        border-radius: 5px;
-        display: inline-block;
-        margin-top: 4px;
-      }
+          span {
+            font-size: 12px;
+            background-color: #ffae0065;
+            padding: 2px 6px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 4px;
+          }
+        }
     }
-  }
 
     .bottom {
       border-top: 2px solid #f7c14b85;
