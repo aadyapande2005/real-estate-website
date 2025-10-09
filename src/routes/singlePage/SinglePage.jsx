@@ -16,10 +16,8 @@ function SinglePage() {
 
   const handleCreateChat = async () => {
     try {
-      // Call API to create chat with the post owner's id
       const chat = await apiRequest.post(`/chats/${user.id}`);
       toast.success("Chat created!");
-      // Navigate to profile page
       window.location.href = "/profile";
     } catch (error) {
       toast.error("Failed to create chat");

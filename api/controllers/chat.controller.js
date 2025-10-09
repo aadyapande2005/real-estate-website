@@ -55,6 +55,19 @@ export const createChat = async (req,res) => {
     const recieverId = req.params.id
     const tokenid = req.user.id
     try {
+        const existingChat = await prisma.chat.findFirst({
+            where: {
+                AND: [
+                    { userIDs: { has: tokenid } },
+                    { userIDs: { has: recieverId } }
+                ]
+            }
+        });
+
+        if (existingChat) {
+            return res.status(200).json(existingChat);
+        }
+
         const chat = await prisma.chat.create({
             data: {
                 userIDs: [tokenid, recieverId]
