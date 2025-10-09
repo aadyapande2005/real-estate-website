@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import HomePage from "./routes/homePage/homePage";
 import {Layout, RequireAuth} from "./routes/layout/layout";
 import ListPage from "./routes/listPage/ListPage";
-import SinglePage from "./routes/singlePage/singlePage";
+import SinglePage from "./routes/singlePage/SinglePage";
 import ProfilePage from "./routes/profilePage/ProfilePage";
 import LoginPage from "./routes/loginPage/LoginPage";
 import RegisterPage from "./routes/RegisterPage/RegisterPage";
