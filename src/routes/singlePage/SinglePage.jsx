@@ -1,24 +1,33 @@
 import './singlePage.scss'
-import { useLoaderData } from 'react-router-dom'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 import SingleMap from '../../components/singleMap/SingleMap'
 import Slider from '../../components/Slider/Slider'
 import DOMPurify from 'dompurify'
 import apiRequest from '../../lib/apiRequest'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { toast } from 'react-toastify'
+import { AuthContext } from '../../context/authcontext'
 
 function SinglePage() {
   const post = useLoaderData()
+  const navigate = useNavigate()
+  const { currentUser } = useContext(AuthContext)
 
   console.log(post)
 
   const [save, setSave] = useState(post.isSaved)
 
   const handleCreateChat = async () => {
+    if (!currentUser) {
+      toast.error("Please login to start a chat");
+      navigate("/login");
+      return;
+    }
+    
     try {
-      const chat = await apiRequest.post(`/chats/${user.id}`);
+      const chat = await apiRequest.post(`/chats/${currentUser.id}`);
       toast.success("Chat created!");
-      window.location.href = "/profile";
+      navigate("/profile");
     } catch (error) {
       toast.error("Failed to create chat");
       console.error(error);
