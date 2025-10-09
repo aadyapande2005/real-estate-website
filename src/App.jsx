@@ -12,7 +12,7 @@ import ListPage from "./routes/listPage/ListPage";
 import SinglePage from "./routes/singlePage/SinglePage";
 import ProfilePage from "./routes/profilePage/ProfilePage";
 import LoginPage from "./routes/loginPage/LoginPage";
-import RegisterPage from "./routes/RegisterPage/RegisterPage";
+import RegisterPage from "./routes/registerPage/RegisterPage";
 import ProfileUpdatePage from "./routes/profileUpdatePage/ProfileUpdatePage";
 import NewPostPage from "./routes/newPostPage/NewPostPage";
 import { listPageLoader, profilePageLoader, singlePageLoader } from "./lib/loaders";
