@@ -4,8 +4,7 @@ import "./chat.scss";
 import { AuthContext } from "../../context/authcontext";
 import apiRequest from "../../lib/apiRequest";
 
-// SOCKET.IO SERVER URL
-const SOCKET_URL = "http://localhost:3000"; // Change if your backend runs elsewhere
+const SOCKET_URL = "https://real-estate-website-backend-2ub3.onrender.com"; 
 
 function Chat({chats}) {
   const [chat, setChat] = useState(false);
@@ -15,13 +14,10 @@ function Chat({chats}) {
   const [error, setError] = useState(null);
   const {currentUser} = useContext(AuthContext)
   const textref = useRef()
-  // Ref for message area container
   const messagesContainerRef = useRef(null);
 
-  // Socket instance
   const [socket, setSocket] = useState(null);
 
-  // Initialize socket connection once
   useEffect(() => {
     const newSocket = io(SOCKET_URL);
     setSocket(newSocket);
@@ -37,7 +33,6 @@ function Chat({chats}) {
       setSender(sender)
       setChatId(chatId);
       setChat(true)
-      // Join the chat room via socket
       if (socket) {
         socket.emit("joinRoom", chatId);
       }
@@ -52,17 +47,14 @@ function Chat({chats}) {
     if (!text) return;
 
     try {
-      // Send message via API for persistence and validation
       const response = await apiRequest.post(`/message/${chatId}`, { text });
       textref.current.value = "";
-      // Message will be broadcast via socket from backend after saving
     } catch (error) {
       console.error("Failed to send message:", error);
       alert("Failed to send message. Please try again later.");
     }
   }
 
-  // Listen for new messages in real time
   useEffect(() => {
     if (!socket) return;
     const handleNewMessage = (message) => {
@@ -74,7 +66,6 @@ function Chat({chats}) {
     };
   }, [socket]);
 
-  // Auto-scroll to bottom when messages change
   useEffect(() => {
     if (messagesContainerRef.current) {
       const container = messagesContainerRef.current;
@@ -114,7 +105,6 @@ function Chat({chats}) {
           </div>
 
           <div className="center" style={{overflowY: 'auto', maxHeight: '400px'}} ref={messagesContainerRef}>
-            {/* Group messages by date */}
             {(() => {
               if (messages.length === 0) return null;
               const groups = [];

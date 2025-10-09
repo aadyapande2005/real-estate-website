@@ -32,7 +32,6 @@ export const sendMessage = async (req, res) => {
                 lastMessage: text,
             }
         })
-        // Emit the new message to all clients in the chat room
         io.to(chatId).emit("newMessage", message);
         res
         .status(200)
