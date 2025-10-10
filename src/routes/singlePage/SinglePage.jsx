@@ -11,28 +11,9 @@ import { AuthContext } from '../../context/authcontext'
 function SinglePage() {
   const post = useLoaderData()
   const navigate = useNavigate()
-  const { currentUser } = useContext(AuthContext)
-
   console.log(post)
 
-  const [save, setSave] = useState(post.isSaved)
-
-  const handleCreateChat = async () => {
-    if (!currentUser) {
-      toast.error("Please login to start a chat");
-      navigate("/login");
-      return;
-    }
-    
-    try {
-      const chat = await apiRequest.post(`/chats/${currentUser.id}`);
-      toast.success("Chat created!");
-      navigate("/profile");
-    } catch (error) {
-      toast.error("Failed to create chat");
-      console.error(error);
-    }
-  }
+  const [save, setSave] = useState(post.isSaved)  
 
   const handleSavePost = async () => {
     const postId = post.id
@@ -49,6 +30,16 @@ function SinglePage() {
 
   const { postdetail, user, ...body } = post
 
+  const handleCreateChat = async () => {
+    try {
+      const chat = await apiRequest.post(`/chats/${user.id}`);
+      toast.success("Chat created!");
+      navigate("/profile");
+    } catch (error) {
+      toast.error("Failed to create chat");
+      console.error(error);
+    }
+  }
 
   return (
     <div className="singlePage">
