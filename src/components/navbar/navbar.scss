@@ -47,12 +47,13 @@ nav {
     }
   }
   .right {
-    flex: 2;
+    //flex: 2;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    background-color: #fcf5f3;
+    //background-color: #fcf5f3;
     height: 100%;
+    z-index: 1;
 
     @include responsive.md {
       background-color: transparent;
@@ -60,28 +61,29 @@ nav {
 
     .signing {
       display: flex;
+      align-items: center;
       gap: 10px;
       margin-left: 20px;
 
       button {
         width: 100px;
         height: 40px;
-        border: none;
+        border: 0cap black;
         background-color: rgb(251, 199, 28);
         color: rgb(255, 255, 255);
         border-radius: 5px;
-        font-size: 15px;
+        font-size: 18px;
         cursor: pointer;
       }
     }
 
     a {
-      padding: 12px 24px;
-      margin: 20px;
+      cursor: pointer;
     }
 
     .user{
       display: flex;
+      gap: 20px;
       align-items: center;
       font-weight: bold;
 
@@ -119,7 +121,16 @@ nav {
           align-items: center;
           justify-content: center;
         }
+      }
 
+      button{
+        width: 100px;
+        height: 40px;
+        border: 0cap black;
+        color: rgb(255, 255, 255);
+        border-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
       }
     }
 

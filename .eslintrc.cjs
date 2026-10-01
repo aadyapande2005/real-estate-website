@@ -8,12 +8,15 @@ module.exports = {
     'plugin:react-hooks/recommended',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
-  parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
+  parser: '@typescript-eslint/parser',
+  parserOptions: { ecmaVersion: 'latest', sourceType: 'module', ecmaFeatures: { jsx: true } },
   settings: { react: { version: '18.2' } },
-  plugins: ['react-refresh'],
+  plugins: ['react-refresh', '@typescript-eslint'],
   rules: {
+    'no-undef': 'off',
+    'no-unused-vars': 'off',
     "react/prop-types": "off",
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
     'react/jsx-no-target-blank': 'off',
     'react-refresh/only-export-components': [
       'warn',

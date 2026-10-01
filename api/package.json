@@ -8,9 +8,10 @@
   "license": "ISC",
   "author": "Aadya Pande",
   "type": "module",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "dev": "node index.js",
+    "dev": "tsx index.ts",
+    "typecheck": "tsc --noEmit",
     "generate": "prisma generate",
     "db:push": "prisma db push",
     "studio": "prisma studio",
@@ -27,6 +28,14 @@
   },
   "devDependencies": {
     "@prisma/client": "^6.7.0",
-    "prisma": "^6.7.0"
+    "@types/bcrypt": "^5.0.2",
+    "@types/cookie-parser": "^1.4.8",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.15.21",
+    "prisma": "^6.7.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
   }
 }
